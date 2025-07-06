@@ -5,7 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
 </head>
+<style>
+    button {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+</style>
 <body>
-    <h1>my name is ganesh</h1>
+    {% if user.is_authenticated %}
+    <form action="{% url 'userlogout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    {% else %}
+        <a href="{% url 'auth' %}">Login</a>
+    {% endif %}
+    <a href="{% url 'view_profile' %}">Profile</a>
 </body>
 </html>

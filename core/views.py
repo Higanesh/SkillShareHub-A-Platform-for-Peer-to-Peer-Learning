@@ -49,3 +49,56 @@ def auth(request):
             return redirect('home')
     return render(request,"auth.html")
 
+def userlogout(request):
+    logout(request)    
+    return redirect("auth")
+
+def create_profile(request):
+    if request.method == 'POST':
+        profile_picture = request.FILES.get("profile_picture")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        gender = request.POST.get("gender")
+        bio = request.POST.get("bio")
+        skills = request.POST.get("skills")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        country = request.POST.get("country")
+        rating = request.POST.get("rating")
+
+        profile, created = Profile.objects.get_or_create(user=request.user)
+
+        if profile_picture:
+            profile.profile_picture = profile_picture
+        profile.first_name = first_name
+        profile.last_name = last_name
+        profile.gender = gender
+        profile.bio = bio
+        profile.skills = skills
+        profile.city = city
+        profile.state = state
+        profile.country = country
+        profile.rating = rating
+        profile.save()
+
+        messages.success(request, "✅ Profile saved successfully!")
+        return redirect("home")
+
+    else:
+        # Pre-fill form with existing data
+        profile = Profile.objects.filter(user=request.user).first()
+        return render(request, "create_profile.html", {"profile": profile})
+
+
+# def update_profile(request):
+#     get_profile_for_update = Profile.objects.get(request.user)
+#     return render(request,"home.html",{"update_profile":get_profile_for_update})
+
+def view_profile(request):
+    view_user_profile = Profile.objects.get(user=request.user)
+    return render(request,"profile.html",{"view_profile":view_user_profile})
+
+def public_profile(request):
+    profile = Profile.objects.all()
+    return render(request,"public_profile.html",{"profiles":profile})
+
