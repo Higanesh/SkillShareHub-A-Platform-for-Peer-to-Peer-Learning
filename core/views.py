@@ -58,6 +58,7 @@ def create_profile(request):
         profile_picture = request.FILES.get("profile_picture")
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
+        u_email = request.POST.get("u_email")
         gender = request.POST.get("gender")
         bio = request.POST.get("bio")
         skills = request.POST.get("skills")
@@ -72,6 +73,7 @@ def create_profile(request):
             profile.profile_picture = profile_picture
         profile.first_name = first_name
         profile.last_name = last_name
+        profile.u_email = u_email
         profile.gender = gender
         profile.bio = bio
         profile.skills = skills
@@ -95,10 +97,20 @@ def create_profile(request):
 #     return render(request,"home.html",{"update_profile":get_profile_for_update})
 
 def view_profile(request):
-    view_user_profile = Profile.objects.get(user=request.user)
+    try:
+        view_user_profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        view_user_profile = None
     return render(request,"profile.html",{"view_profile":view_user_profile})
 
 def public_profile(request):
-    profile = Profile.objects.all()
+    # profile = Profile.objects.all()
+    profile = Profile.objects.exclude(user=request.user)
     return render(request,"public_profile.html",{"profiles":profile})
+
+def createRoom(request):
+    return render(request,"chat.html")
+
+def messageView(request,room_name,username):
+    return render(request,"message.html")
 

@@ -1,30 +1,159 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+  <meta charset="UTF-8">
+  <title>Welcome to SkillShareHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .hero {
+      background-color: #f0f2f5;
+      padding: 60px 0;
+      text-align: center;
+    }
+    .hero img {
+      width: 60%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .section-title {
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 30px;
+    }
+    .feature-card {
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .team-member {
+      text-align: center;
+    }
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
 </head>
-<style>
-    button {
-    background-color: #d9534f;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-</style>
 <body>
-    {% if user.is_authenticated %}
-    <form action="{% url 'userlogout' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-    {% else %}
-        <a href="{% url 'auth' %}">Login</a>
-    {% endif %}
-    <a href="{% url 'view_profile' %}">Profile</a>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">SkillShareHub</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto"> <!-- Align right; use me-auto for left -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'public_profile' %}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_profile' %}">Self Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'userlogout' %}">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1 class="display-4">Welcome to SkillShareHub</h1>
+    <p class="lead">A peer-to-peer learning platform to share and grow your skills with real-time collaboration.</p>
+    <img src="{% static 'images/skillshare_hero_ai.jpg' %}" alt="SkillShare AI">
+  </div>
+</section>
+
+<!-- Features -->
+<section class="container">
+  <h2 class="section-title">Why SkillShareHub?</h2>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="feature-card bg-light">
+        <h4>Real-Time Chat</h4>
+        <p>Communicate instantly with learners and mentors.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card bg-light">
+        <h4>Video Sessions</h4>
+        <p>Book or conduct interactive learning sessions.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card bg-light">
+        <h4>Profile Ratings</h4>
+        <p>Build trust with ratings and feedback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="container mt-5">
+  <h2 class="section-title">About Our Platform</h2>
+  <p class="text-center px-4">
+    SkillShareHub empowers users to teach and learn from each other by offering skill-based profile creation,
+    real-time chat, video sessions, and rating-based credibility. Whether you're a mentor or a learner, you can
+    build your reputation and grow in your field.
+  </p>
+</section>
+
+<!-- Team Section -->
+<section class="container mt-5">
+  <h2 class="section-title">Meet the Team</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-3 team-member">
+      <img src="{% static 'images/founder.jpg' %}" alt="Ganesh">
+      <h5 class="mt-2">Ganesh Gayakwad</h5>
+      <p>Founder & Full Stack Developer</p>
+    </div>
+    <div class="col-md-3 team-member">
+      <img src="{% static 'images/team2.jpg' %}" alt="Teammate">
+      <h5 class="mt-2">Riya Mehta</h5>
+      <p>UI/UX Designer</p>
+    </div>
+    <div class="col-md-3 team-member">
+      <img src="{% static 'images/bkeng.jpg' %}" alt="Teammate">
+      <h5 class="mt-2">Sagar Wankhade</h5>
+      <p>Backend Engineer</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="mt-5">
+  <div class="container">
+    <p>&copy; 2025 SkillShareHub. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

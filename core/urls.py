@@ -14,5 +14,7 @@ urlpatterns = [
     path("userlogout",userlogout,name="userlogout"),
     path("create_profile",create_profile,name="create_profile"),
     path("view_profile",view_profile,name="view_profile"),
-    path("public_profile",public_profile,name="public_profile")
+    path("public_profile",public_profile,name="public_profile"),
+    path("createRoom",createRoom,name="createRoom"),
+    path("messageView/<str:room_name>/<str:username/",messageView,name="messageView"),
 ]
